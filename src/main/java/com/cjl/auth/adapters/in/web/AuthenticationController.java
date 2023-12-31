@@ -36,37 +36,34 @@ import jakarta.ws.rs.core.Response;
 @CrossOrigin
 public class AuthenticationController {
 
-
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
 	@Autowired
 	AccountJpaRepositoryAdapter accountJpaRepositoryAdapter;
-	
+
 	@Autowired
-    LoginUseCase loginUseCase;
+	LoginUseCase loginUseCase;
 
-    @Autowired
-    SignupUseCase signupUseCase;
+	@Autowired
+	SignupUseCase signupUseCase;
 
-    @Autowired
-    PasswordRecoveryUseCase passwordRecoveryUseCase;
+	@Autowired
+	PasswordRecoveryUseCase passwordRecoveryUseCase;
 
-    @Autowired
-    UpdatePasswordUseCase updatePasswordUseCase;
+	@Autowired
+	UpdatePasswordUseCase updatePasswordUseCase;
 
-	
-	@Bean
-	public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-	    return http.getSharedObject(AuthenticationManagerBuilder.class)
-	            .build();
-	}
-	
+//	
+//	@Bean
+//	public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+//	    return http.getSharedObject(AuthenticationManagerBuilder.class)
+//	            .build();
+//	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@PostMapping("/login")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginDTO authenticationRequest) throws Exception {
 
-		
 		final Optional<User> user = accountJpaRepositoryAdapter.findByEmail(authenticationRequest.getEmail());
 
 		if (!user.isPresent()) {
@@ -77,33 +74,31 @@ public class AuthenticationController {
 		return ResponseEntity.ok(new LoginResponseDTO(token));
 	}
 
-	@PostMapping("/password/recovery") 
-    public Response passRecover(@RequestBody PassRecoverDTO passRecoverDTO) throws Exception {
-        passwordRecoveryUseCase.recover(passRecoverDTO);
-        return Response.ok().build();
-    }
+	@PostMapping("/password/recovery")
+	public Response passRecover(@RequestBody PassRecoverDTO passRecoverDTO) throws Exception {
+		passwordRecoveryUseCase.recover(passRecoverDTO);
+		return Response.ok().build();
+	}
 
-
-    @PostMapping("/signup") 
-    public Response signup(@RequestBody SignupDTO signupDTO) throws Exception{
-        return Response.ok(signupUseCase.signup(signupDTO)).build();
-    }
+	@PostMapping("/signup")
+	public Response signup(@RequestBody SignupDTO signupDTO) throws Exception {
+		return Response.ok(signupUseCase.signup(signupDTO)).build();
+	}
 
 //    @GetMapping("/password/recovery/email")
 //    public Response recoverEmail(SignupDTO signupDTO){
 //        return Response.ok(identity.getIdentity().getPrincipal().getName()).build();
 //    }
 
-    
-    @PostMapping("/password/update")
-    public Response passwordUpdate(@RequestBody UpdatePasswordDTO updatePasswordDTO){
-        try {
-            updatePasswordUseCase.update(updatePasswordDTO);
-            return Response.ok().build();
-        } catch (Exception e){
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
+	@PostMapping("/password/update")
+	public Response passwordUpdate(@RequestBody UpdatePasswordDTO updatePasswordDTO) {
+		try {
+			updatePasswordUseCase.update(updatePasswordDTO);
+			return Response.ok().build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 
-    }
-	
+	}
+
 }
