@@ -24,7 +24,7 @@ public class UpdatePasswordUseCase {
             throw new Exception("Email não encontrado na base de dados");
         }
 
-        user.get().setPassword(encoder.encode(updatePasswordDTO.getPassword()));
+        user.get().updatePassword(updatePasswordDTO.getPassword());
         accountRepository.save(user.get());
     }
 }

@@ -13,32 +13,25 @@ import com.cjl.auth.infrastructure.security.jwt.JwtTokenUtil;
 
 import lombok.RequiredArgsConstructor;
 
-
 @Component
 @RequiredArgsConstructor
 public class LoginUseCase {
-	
+
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
-	
-    private final AccountRepository accountRepository;
-    
-    public LoginResponseDTO login(LoginDTO loginDTO) {
-    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-    	
-        Optional<User> user = accountRepository.findByEmail(loginDTO.getEmail());
 
-        if (user.isPresent()){
-            if (user.get().matchesPassword(encoder.encode(loginDTO.getPassword()))){
-                try {
-                    return new LoginResponseDTO(jwtTokenUtil.generateToken(user.get()));
-                } catch (Exception e){
-                    throw new SecurityException("Erro ao gerar o token");
-                }
-            }
-        } else {
-            throw new SecurityException("Usuário não encontrado");
-        }
-        return null;
-    }
+	private final AccountRepository accountRepository;
+
+	public LoginResponseDTO login(LoginDTO loginDTO) {
+		Optional<User> user = accountRepository.findByEmail(loginDTO.getEmail());
+
+		if (user.isPresent()) {
+			if (user.get().matchesPassword(loginDTO.getPassword())) {
+				return new LoginResponseDTO(jwtTokenUtil.generateToken(user.get()));
+			}
+		} else {
+			throw new SecurityException("Usuário não encontrado");
+		}
+		return null;
+	}
 }

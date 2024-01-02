@@ -98,7 +98,11 @@
 			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>com.cjl</groupId>
+			<artifactId>authcore</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -122,5 +126,10 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<repositories>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/leogmo/*</url> <!--scstock-->
+		</repository>
+	</repositories>
 </project>

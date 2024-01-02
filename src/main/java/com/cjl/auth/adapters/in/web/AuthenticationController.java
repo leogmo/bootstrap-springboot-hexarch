@@ -3,17 +3,12 @@ package com.cjl.auth.adapters.in.web;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cjl.auth.adapters.out.jpa.AccountJpaRepositoryAdapter;
@@ -54,12 +49,6 @@ public class AuthenticationController {
 	@Autowired
 	UpdatePasswordUseCase updatePasswordUseCase;
 
-//	
-//	@Bean
-//	public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-//	    return http.getSharedObject(AuthenticationManagerBuilder.class)
-//	            .build();
-//	}
 
 	@PostMapping("/login")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginDTO authenticationRequest) throws Exception {

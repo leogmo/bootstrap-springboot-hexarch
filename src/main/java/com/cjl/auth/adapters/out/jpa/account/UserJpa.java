@@ -37,12 +37,9 @@ public class UserJpa {
     private List<RoleJpa> roles = new ArrayList<>();
 
     public User toUser(){
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setId(id);
-        user.setRoles(getRoles().stream().map(RoleJpa::getName).map(Role::valueOf).collect(Collectors.toList()));
+        User user = new User(id, username, password, email, 
+        		getRoles().stream().map(RoleJpa::getName).map(Role::valueOf)
+        		.collect(Collectors.toList()));
         return user;
     }
 }
