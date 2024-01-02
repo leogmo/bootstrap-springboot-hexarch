@@ -9,7 +9,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import com.cjl.auth.adapters.out.jpa.AccountJpaRepositoryAdapter;
 import com.cjl.auth.adapters.out.mail.EmailSenderAdapter;
-import com.cjl.auth.application.usecase.EmailSender;
 import com.cjl.auth.application.usecase.account.LoginUseCase;
 import com.cjl.auth.application.usecase.account.PasswordRecoveryUseCase;
 import com.cjl.auth.application.usecase.account.SignupUseCase;
