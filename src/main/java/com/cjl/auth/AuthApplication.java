@@ -3,6 +3,7 @@ package com.cjl.auth;
 import java.util.Arrays;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,10 +18,20 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.cjl.auth.adapters.out.jpa.AccountJpaRepositoryAdapter;
+import com.cjl.auth.application.usecase.account.LoginUseCase;
+import com.cjl.auth.infraestructure.security.JwtTokenUtil;
+
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 @ComponentScan(basePackages = "com.cjl.auth")
 @EnableAutoConfiguration
 public class AuthApplication {
+	
+	@Autowired
+	JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+	AccountJpaRepositoryAdapter accountJpaRepositoryAdapter;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AuthApplication.class, args);
@@ -49,23 +60,4 @@ public class AuthApplication {
 
 	    return configSource;
 	}
-	
-	@Bean
-	public JavaMailSender getJavaMailSender() {
-	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-	    mailSender.setHost("smtp.gmail.com");
-	    mailSender.setPort(587);
-	    
-	    mailSender.setUsername("my.gmail@gmail.com");
-	    mailSender.setPassword("password");
-	    
-	    Properties props = mailSender.getJavaMailProperties();
-	    props.put("mail.transport.protocol", "smtp");
-	    props.put("mail.smtp.auth", "true");
-	    props.put("mail.smtp.starttls.enable", "true");
-	    props.put("mail.debug", "true");
-	    
-	    return mailSender;
-	}
-
 }
