@@ -17,7 +17,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
-public class JwtTokenUtil implements Serializable {
+public class JwtTokenUtil implements Serializable, com.cjl.auth.infraestructure.security.JwtTokenUtil {
 
 	private static final long serialVersionUID = -2550185165626007488L;
 
@@ -52,6 +52,7 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	//generate token for user
+	@Override
 	public String generateToken(User user) {
 		Map<String, Object> claims = new HashMap<>();
 		return doGenerateToken(claims, user.getEmail());
